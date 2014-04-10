@@ -31,22 +31,88 @@
         <!-- <script src="js/vendor/jquery-1.10.2.min.js"></script> -->
         <script>
             (function($) {
-                var flickerAPI = "http://api.flickr.com/services/feeds/photos_public.gne?jsoncallback=?";
-                $.getJSON( flickerAPI, {
-                    tags: "mount rainier",
-                    tagmode: "any",
-                    format: "json"
-                }).done(function( data ) {
-                    $.each( data.items, function( i, item ) {
-                        $( "<img>" ).attr( "src", item.media.m ).appendTo( "#images" );
-                        if ( i === 3 ) {
-                            return false;
+            
+                var flickerAPI = 'http://api.flickr.com/services/feeds/photos_public.gne';
+            
+                function jsonpTest1() {
+                
+                    window.flickrCallbackFunction = function( data ) {
+                        window.console && console.log("this is myCallbackFunction");
+                        $.each( data.items, function( i, item ) {
+                            $( "<img>" ).attr( "src", item.media.m ).appendTo( "#images" );
+                            if ( i === 3 ) {
+                                return false;
+                            }
+                        });
+                    };                
+                    
+                   $.ajax({
+                        url: flickerAPI,
+                        // the name of the callback parameter, as specified by the service
+                        jsonp: "jsoncallback",
+                        // tell jQuery we're expecting JSONP
+                        dataType: "jsonp",
+                        // tell what we want and that we want JSON
+                        data: {
+                            tags: "mount rainier",
+                            tagmode: "any",
+                            format: "json",
+                            jsoncallback: "flickrCallbackFunction"
                         }
                     });
-                }).fail(function(error) {
-                    $('#images').append('<div class="error message">request failed</div>');
-                    window.console && console.log(error);
-                });
+                }
+                
+                function jsonpTest1v2() {
+                
+                    window.flickrCallbackFunction = function( data ) {
+                        window.console && console.log("this is myCallbackFunction");
+                        $.each( data.items, function( i, item ) {
+                            $( "<img>" ).attr( "src", item.media.m ).appendTo( "#images" );
+                            if ( i === 3 ) {
+                                return false;
+                            }
+                        });
+                    };                
+                    
+                    $.getJSON( flickerAPI + '?jsoncallback=flickrCallbackFunction', {
+                        tags: "mount rainier",
+                        tagmode: "any",
+                        format: "json"
+                    }).done(function( data ) {
+                        $.each( data.items, function( i, item ) {
+                            $( "<img>" ).attr( "src", item.media.m ).appendTo( "#images" );
+                            if ( i === 3 ) {
+                                return false;
+                            }
+                        });
+                    }).fail(function( data ) {
+                        window.console && console.log(data);
+                    });
+                }
+                
+                function jsonpTest2() {
+                    $.ajax({
+                        url: "http://query.yahooapis.com/v1/public/yql",
+                        // the name of the callback parameter, as specified by the YQL service
+                        jsonp: "callback",
+                        // tell jQuery we're expecting JSONP
+                        dataType: "jsonp",
+                        // tell YQL what we want and that we want JSON
+                        data: {
+                            q: "select title,abstract,url from search.news where query=\"cat\"",
+                            format: "json"
+                        }
+                    }).done(function( response ) {
+                        $('#images').append('<div class="message">success</div>');
+                        window.console && console.log(response);
+                    }).fail(function(error) {
+                        $('#images').append('<div class="error message">request failed</div>');
+                        window.console && console.log(error);
+                    });;
+                }
+            
+                // Actual work
+                jsonpTest1v2();
             })(jQuery);
         </script>      
     </body>
