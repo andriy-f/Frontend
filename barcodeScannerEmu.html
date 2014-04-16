@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
+<!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8"> <![endif]-->
+<!--[if IE 8]>         <html class="no-js lt-ie9"> <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js"> <!--<![endif]-->
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+        <title>Barcode Scanner</title>
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width">
+        <link rel="stylesheet" href="css/normalize.css">
+        <script src="js/vendor/modernizr-2.6.2.min.js"></script>
+    </head>
+    <body>
+        <!--[if lt IE 7]>
+            <p class="chromeframe">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> or <a href="http://www.google.com/chromeframe/?redirect=true">activate Google Chrome Frame</a> to improve your experience.</p>
+        <![endif]-->
+
+        <!-- Add your site or application content here -->
+        <div class="wrapper">
+            Barcode: <input id="barcode" type="text" readonly="readonly" />
+            <input id="scan" type="button" value="Scan" />
+        </div>
+
+        <script src="js/vendor/jquery-2.1.0.min.js"></script>
+        <script src="js/vendor/barcodeScannerEmu.js"></script>
+        <script src="js/plugins.js"></script>
+        <script>
+            (function(){
+                window.plugins = window.plugins || {};
+                window.plugins.barcodeScanner = window.plugins.barcodeScanner || new window.plugins.BarcodeScannerEmu();
+            
+                jQuery(function($){
+                    $('#barcode').val('');
+                    $('#scan').on('click', function(){
+                        try {
+                            window.plugins.barcodeScanner.scan(
+                                function (args) {
+                                    console.log("Scan result: \n" +
+                                        "text: " + args.text + "\n" +
+                                        "format: " + args.format + "\n" +
+                                        "cancelled: " + args.cancelled + "\n");
+                                    if(!args.cancelled) {
+                                        $('#barcode').val(args.text);
+                                    }
+                                });
+                        } catch (ex) {
+                            console.log(ex.message);
+                            alert(ex.message);
+                        }
+                    });
+                });                 
+            })();
+        </script>        
+    </body>
+</html>
