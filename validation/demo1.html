@@ -8,7 +8,7 @@
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-    <title>Knockout</title>
+    <title>Validation demo 1</title>
     <meta name="description" content="">
     <meta name="viewport" content="width=device-width">
 
@@ -18,6 +18,7 @@
     <link rel="stylesheet" href="../css/bootstrap.min.css">
     <link rel="stylesheet" href="../css/bootstrap-theme.min.css">
     <link rel="stylesheet" href="../css/theme.css">
+    <link rel="stylesheet" href="../css/validation/demo1.css">
     <script src="../js/vendor/modernizr-2.6.2.min.js"></script>
 </head>
 <body>
@@ -37,7 +38,7 @@
             </div>
             <div class="navbar-collapse collapse">
                 <ul class="nav navbar-nav">
-                    <li><a href="./">Home</a></li>
+                    <!--<li><a href="./">Home</a></li>-->
                     <li><a href="#">Demo1</a></li>
                     <li><a href="../">Level up</a></li>
                 </ul>
@@ -46,80 +47,40 @@
     </div>
 
     <div class="container body-content">
-        <div>
-            <label>
-                Static name:
-                <input type="text" data-bind="value: staticName" />
-            </label>
-            <p>
-                Hello, <span data-bind="text: staticName"></span>
-            </p>
-            <button data-bind="click: changeStaticName">Don't change static name</button>
-        </div>
-
-        <div>
-            <label>
-                Name:
-                <input type="text" data-bind="value: name, valueUpdate: 'afterkeydown'" /><br />
-            </label>
-            <label><input type="checkbox" data-bind="checked: nameVisible" />Name visible</label>
-            
-            <p data-bind="visible: nameVisible">
-                Hello, <span data-bind="text: name"></span>
-            </p>
+        <form method="POST" id="myform">
+            <fieldset>
+                <legend>The Form</legend>
+                <div class="required">
+                    <label>
+                        Enter data
+                        <input type="text" required="required" name="datafield" />
+                    </label>
+                </div>
+            </fieldset>
             <div>
-                <button data-bind="click: changeName">Change name bind</button>
+                <input type="submit" />
             </div>
-        </div>
-        <div>
-            <button>Clicker</button>
-        </div>
-
-        <div>
-            <p>
-                <label>
-                    <input type="checkbox" data-bind="checked: cellphoneEditable" />
-                    Cellphone is editable
-                </label>
-            </p>
-            <p>
-                <label>
-                    Your cellphone number:
-                    <input type="text" data-bind="value: cellphoneNumber, enable: cellphoneEditable" />
-                </label>
-            </p>
-        </div>
+        </form>
 
         <hr />
         <footer>
             <p>&copy; 2014 - My ASP.NET Application</p>
         </footer>
     </div>
-    
+
     <script src="../js/vendor/jquery-2.0.3.min.js"></script>
     <script src="../js/plugins.js"></script>
     <script src="../js/vendor/bootstrap.min.js"></script>
-    <script src="../js/vendor/knockout-3.1.0.min.js"></script>
+    <script src="../js/vendor/jquery.validate.min.js"></script>
     <script>
         jQuery(function ($) {
-            var pageViewModel = {
-                staticName: 'Andre',
-                changeStaticName: function () {
-                    this.staticName = 'Sep';
-                },
-
-
-                name: ko.observable('Defaulty'),
-                nameVisible: ko.observable(true),
-                changeName: function () {
-                    this.name('Mentor');
-                },
-
-                cellphoneEditable: ko.observable(false),
-                cellphoneNumber: '+38098812312'
-            };
-
-            ko.applyBindings(pageViewModel);
+            $('#myform').validate({
+                rules: {
+                    datafield: {
+                        required: true
+                    }
+                }
+            });
         });
     </script>
 

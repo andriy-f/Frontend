@@ -1,0 +1,47 @@
+﻿body {
+}
+
+/* style all input elements with a required attribute */
+input:required {
+    /*box-shadow: 4px 4px 20px rgba(200, 0, 0, 0.85);*/
+    /*outline: none;*/
+
+    /*padding-right: 25px;
+    background-image: url(../../img/unchecked.gif);
+    background-repeat: no-repeat;
+    background-position: right 7px top 7px;*/
+}
+
+.required:after {
+    /*content:"******";
+    background-image: url(../../img/unchecked.gif);
+    width: 50px;
+    height: 50px;*/
+}
+
+.required {
+    display: inline-block;
+    padding-right: 25px;
+    background-image: url(../../img/unchecked.gif);
+    background-repeat: no-repeat;
+    background-position: right 4px top 4px;
+}
+
+
+/**
+ * style input elements that have a required
+ * attribute and a focus state
+ */
+input:required:focus {
+    /*border: 3px solid red;*/
+    /*outline: none;*/
+    
+}
+
+/**
+ * style input elements that have a required
+ * attribute and a hover state
+ */
+input:required:hover {
+  opacity: 1;
+}
