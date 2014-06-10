@@ -47,8 +47,10 @@
 
     <div class="container body-content">
         <div>
-            Static name:
+            <label>
+                Static name:
                 <input type="text" data-bind="value: staticName" />
+            </label>
             <p>
                 Hello, <span data-bind="text: staticName"></span>
             </p>
@@ -56,16 +58,38 @@
         </div>
 
         <div>
-            Name:
-            <input type="text" data-bind="value: name, valueUpdate: 'afterkeydown'" />
-            <p>
+            <label>
+                Name:
+                <input type="text" data-bind="value: name, valueUpdate: 'afterkeydown'" /><br />
+            </label>
+            <label><input type="checkbox" data-bind="checked: nameVisible" />Name visible</label>
+            
+            <p data-bind="visible: nameVisible">
                 Hello, <span data-bind="text: name"></span>
             </p>
-            <button data-bind="click: changeName">Change name bind</button>
+            <div>
+                <button data-bind="click: changeName">Change name bind</button>
+            </div>
         </div>
         <div>
             <button>Clicker</button>
         </div>
+
+        <div>
+            <p>
+                <label>
+                    <input type="checkbox" data-bind="checked: cellphoneEditable" />
+                    Cellphone is editable
+                </label>
+            </p>
+            <p>
+                <label>
+                    Your cellphone number:
+                    <input type="text" data-bind="value: cellphoneNumber, enable: cellphoneEditable" />
+                </label>
+            </p>
+        </div>
+
         <hr />
         <footer>
             <p>&copy; 2014 - My ASP.NET Application</p>
@@ -78,18 +102,24 @@
     <script src="../js/vendor/knockout-3.1.0.min.js"></script>
     <script>
         jQuery(function ($) {
-            var viewModel = {
+            var pageViewModel = {
                 staticName: 'Andre',
-                name: ko.observable('Defaulty'),
                 changeStaticName: function () {
                     this.staticName = 'Sep';
                 },
+
+
+                name: ko.observable('Defaulty'),
+                nameVisible: ko.observable(true),
                 changeName: function () {
                     this.name('Mentor');
-                }
+                },
+
+                cellphoneEditable: ko.observable(false),
+                cellphoneNumber: '+38098812312'
             };
 
-            ko.applyBindings(viewModel);
+            ko.applyBindings(pageViewModel);
         });
     </script>
 
