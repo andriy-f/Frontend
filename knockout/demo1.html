@@ -2,71 +2,103 @@
 <!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
 <!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8"> <![endif]-->
 <!--[if IE 8]>         <html class="no-js lt-ie9"> <![endif]-->
-<!--[if gt IE 8]><!--> <html class="no-js"> <!--<![endif]-->
-    <head>
-        <meta charset="utf-8">
-        <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-        <title>Knockout</title>
-        <meta name="description" content="">
-        <meta name="viewport" content="width=device-width">
+<!--[if gt IE 8]><!-->
+<html class="no-js">
+<!--<![endif]-->
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <title>Knockout</title>
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width">
 
-        <!-- Place favicon.ico and apple-touch-icon.png in the root directory -->
+    <!-- Place favicon.ico and apple-touch-icon.png in the root directory -->
 
-        <link rel="stylesheet" href="../css/normalize.css">
-        <link rel="stylesheet" href="../css/bootstrap.min.css">
-        <link rel="stylesheet" href="../css/bootstrap-theme.min.css">
-        <link rel="stylesheet" href="../css/theme.css">
-        <script src="../js/vendor/modernizr-2.6.2.min.js"></script>        
-    </head>
-    <body>
-        <!--[if lt IE 7]>
+    <link rel="stylesheet" href="../css/normalize.css">
+    <link rel="stylesheet" href="../css/bootstrap.min.css">
+    <link rel="stylesheet" href="../css/bootstrap-theme.min.css">
+    <link rel="stylesheet" href="../css/theme.css">
+    <script src="../js/vendor/modernizr-2.6.2.min.js"></script>
+</head>
+<body>
+    <!--[if lt IE 7]>
             <p class="chromeframe">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> or <a href="http://www.google.com/chromeframe/?redirect=true">activate Google Chrome Frame</a> to improve your experience.</p>
         <![endif]-->
 
-        <div class="navbar navbar-inverse navbar-fixed-top">
-            <div class="container">
-                <div class="navbar-header">
-                    <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
-                        <span class="icon-bar"></span>
-                        <span class="icon-bar"></span>
-                        <span class="icon-bar"></span>
-                        <li><a href="../">Root</a></li>
-                    </button>                
-                </div>
-                <div class="navbar-collapse collapse">
-                    <ul class="nav navbar-nav">
-                        <li><a href="./">Home</a></li>
-                        <li><a href="#">Demo1</a></li>
-                        <li><a href="../">Level up</a></li>                    
-                    </ul>                
-                </div>
+    <div class="navbar navbar-inverse navbar-fixed-top">
+        <div class="container">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <li><a href="../">Root</a></li>
+                </button>
+            </div>
+            <div class="navbar-collapse collapse">
+                <ul class="nav navbar-nav">
+                    <li><a href="./">Home</a></li>
+                    <li><a href="#">Demo1</a></li>
+                    <li><a href="../">Level up</a></li>
+                </ul>
             </div>
         </div>
-        
-        <div class="container body-content">
-            Name: <input type="text" />
+    </div>
+
+    <div class="container body-content">
+        <div>
+            Static name:
+                <input type="text" data-bind="value: staticName" />
             <p>
-                Hello, <span></span>
+                Hello, <span data-bind="text: staticName"></span>
             </p>
-            <button>Change name</button>
-            
-            <hr />
-            <footer>
-                <p>&copy; 2014 - My ASP.NET Application</p>
-            </footer>
+            <button data-bind="click: changeStaticName">Don't change static name</button>
         </div>
 
-        <script src="../js/vendor/jquery-2.0.3.min.js"></script>
-        <script src="../js/plugins.js"></script>
-        <script src="../js/vendor/bootstrap.min.js"></script>
-        <script src="../js/vendor/knockout-3.1.0.min.js"></script>
+        <div>
+            Name:
+            <input type="text" data-bind="value: name, valueUpdate: 'afterkeydown'" />
+            <p>
+                Hello, <span data-bind="text: name"></span>
+            </p>
+            <button data-bind="click: changeName">Change name bind</button>
+        </div>
+        <div>
+            <button>Clicker</button>
+        </div>
+        <hr />
+        <footer>
+            <p>&copy; 2014 - My ASP.NET Application</p>
+        </footer>
+    </div>
 
-        <!-- Google Analytics: change UA-XXXXX-X to be your site's ID. -->
-        <!--<script>
+    <script src="../js/vendor/jquery-2.0.3.min.js"></script>
+    <script src="../js/plugins.js"></script>
+    <script src="../js/vendor/bootstrap.min.js"></script>
+    <script src="../js/vendor/knockout-3.1.0.min.js"></script>
+    <script>
+        jQuery(function ($) {
+            var viewModel = {
+                staticName: 'Andre',
+                name: ko.observable('Defaulty'),
+                changeStaticName: function () {
+                    this.staticName = 'Sep';
+                },
+                changeName: function () {
+                    this.name('Mentor');
+                }
+            };
+
+            ko.applyBindings(viewModel);
+        });
+    </script>
+
+    <!-- Google Analytics: change UA-XXXXX-X to be your site's ID. -->
+    <!--<script>
             var _gaq=[['_setAccount','UA-XXXXX-X'],['_trackPageview']];
             (function(d,t){var g=d.createElement(t),s=d.getElementsByTagName(t)[0];
             g.src='//www.google-analytics.com/ga.js';
             s.parentNode.insertBefore(g,s)}(document,'script'));
         </script>-->
-    </body>
+</body>
 </html>
