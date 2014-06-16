@@ -60,9 +60,10 @@
         <div>
             <label>
                 Name:
-                <input type="text" data-bind="value: name, valueUpdate: 'afterkeydown'" /><br />
+                <input type="text" data-bind="value: name, valueUpdate: 'afterkeydown', enable: nameEditable" /><br />
             </label>
-            <label><input type="checkbox" data-bind="checked: nameVisible" />Name visible</label>
+            <div><label><input type="checkbox" data-bind="checked: nameEditable" />Name editable</label></div>
+            <div><label><input type="checkbox" data-bind="checked: nameVisible" />Name visible</label></div>
             
             <p data-bind="visible: nameVisible">
                 Hello, <span data-bind="text: name"></span>
@@ -110,6 +111,7 @@
 
 
                 name: ko.observable('Defaulty'),
+                nameEditable: ko.observable(true),
                 nameVisible: ko.observable(true),
                 changeName: function () {
                     this.name('Mentor');
