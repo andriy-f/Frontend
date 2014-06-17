@@ -2,13 +2,11 @@
 <!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
 <!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8"> <![endif]-->
 <!--[if IE 8]>         <html class="no-js lt-ie9"> <![endif]-->
-<!--[if gt IE 8]><!-->
-<html class="no-js">
-<!--<![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js"> <!--<![endif]-->
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-    <title>Knockout custom extenders</title>
+    <title>Knockout</title>
     <meta name="description" content="">
     <meta name="viewport" content="width=device-width">
 
@@ -33,7 +31,7 @@
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                <a href="../" class="navbar-brand">Root</a>
+                <a href="../" class="navbar-brand">Root</a>           
             </div>
             <div class="navbar-collapse collapse">
                 <ul class="nav navbar-nav">
@@ -47,70 +45,52 @@
             </div>
         </div>
     </div>
-
+        
     <div class="container body-content">
-        
-        <p data-bind="css: { error: firstName.hasError }">
-            <label data-bind="labelFor: firstName"></label>
-            <input data-bind='value: firstName, valueUpdate: "afterkeydown"' />
-            <span data-bind='visible: firstName.hasError, text: firstName.validationMessage'> </span>
-        </p>
-        <p data-bind="css: { error: lastName.hasError }">
-            <input data-bind='value: lastName, valueUpdate: "afterkeydown"' />
-            <span data-bind='visible: lastName.hasError, text: lastName.validationMessage'> </span>
-        </p>
-        
+        <h1>Knockout custom validation</h1>
+            
+        <div>
+            <div>
+                <label data-bind="labelFor: name">
+                    Name:
+                    <input type="text" data-bind="value: name, valueUpdate: 'afterkeydown'" /><br />
+                </label>
+            </div>
+            
+            <div>
+                <label>
+                    Cell phone:
+                    <input type="text" data-bind="value: cellphone, valueUpdate: 'afterkeydown'" /><br />
+                </label>
+            </div>
+
+            <div>
+                <button data-bind="click: changeName">Submit</button>
+            </div>
+        </div>
+
         <hr />
         <footer>
-            <p>&copy; 2014 - My ASP.NET Application</p>
+            <p>&copy; 2014 - My Boilerplate</p>
         </footer>
     </div>
-    
+
     <script src="../js/vendor/jquery-2.0.3.min.js"></script>
     <script src="../js/plugins.js"></script>
     <script src="../js/vendor/bootstrap.min.js"></script>
     <script src="../js/vendor/knockout-3.1.0.min.js"></script>
+    <script src="../js/vendor/knockout.validation.min.js"></script>
     <script src="../js/knockout.labelFor.js"></script>
 
     <script>
-        
-        ko.extenders.required = function (target, overrideMessage) {
-            //add some sub-observables to our observable
-            target.hasError = ko.observable();
-            target.validationMessage = ko.observable();
-
-            //define a function to do validation
-            function validate(newValue) {
-                target.hasError(newValue ? false : true);
-                target.validationMessage(newValue ? "" : overrideMessage || "This field is required");
-            }
-
-            //initial validation
-            validate(target());
-
-            //validate whenever the value changes
-            target.subscribe(validate);
-
-            //return the original observable
-            return target;
-        };
-
-        jQuery(function ($) {
+        jQuery(function($) {
             var pageViewModel = {
-                firstName: ko.observable('Bob').extend({ required: "Please enter a first name" }),
-                lastName: ko.observable('Smith').extend({ required: "" })
+                name: ko.observable('Bob').extend({ required: true }),
+                cellphone: ko.observable()
             };
 
             ko.applyBindings(pageViewModel);
         });
     </script>
-
-    <!-- Google Analytics: change UA-XXXXX-X to be your site's ID. -->
-    <!--<script>
-            var _gaq=[['_setAccount','UA-XXXXX-X'],['_trackPageview']];
-            (function(d,t){var g=d.createElement(t),s=d.getElementsByTagName(t)[0];
-            g.src='//www.google-analytics.com/ga.js';
-            s.parentNode.insertBefore(g,s)}(document,'script'));
-        </script>-->
 </body>
 </html>
