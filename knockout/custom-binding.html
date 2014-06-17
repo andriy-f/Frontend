@@ -2,7 +2,7 @@
 <!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
 <!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8"> <![endif]-->
 <!--[if IE 8]>         <html class="no-js lt-ie9"> <![endif]-->
-<!--[if gt IE 8]><!-->
+<!--[if gt IE 8]><!--> 
 <html class="no-js">
 <!--<![endif]-->
 <head>
@@ -22,8 +22,8 @@
 </head>
 <body>
     <!--[if lt IE 7]>
-            <p class="chromeframe">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> or <a href="http://www.google.com/chromeframe/?redirect=true">activate Google Chrome Frame</a> to improve your experience.</p>
-        <![endif]-->
+        <p class="chromeframe">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> or <a href="http://www.google.com/chromeframe/?redirect=true">activate Google Chrome Frame</a> to improve your experience.</p>
+    <![endif]-->
 
     <div class="navbar navbar-inverse navbar-fixed-top">
         <div class="container">
@@ -33,7 +33,7 @@
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                <a href="../" class="navbar-brand">Root</a>
+                <a href="../" class="navbar-brand">Root</a>           
             </div>
             <div class="navbar-collapse collapse">
                 <ul class="nav navbar-nav">
@@ -46,26 +46,22 @@
             </div>
         </div>
     </div>
-
+        
     <div class="container body-content">
+        <h1>Knockout labelFor custom binding</h1>
+            
         <div>
-            <label>
-                Static name:
-                <input type="text" data-bind="value: staticName" />
-            </label>
-            <p>
-                Hello, <span data-bind="text: staticName"></span>
-            </p>
-            <button data-bind="click: changeStaticName">Don't change static name</button>
-        </div>
-
-        <div>
-            <label>
+            <label data-bind="labelFor: name">
                 Name:
                 <input type="text" data-bind="value: name, valueUpdate: 'afterkeydown', enable: nameEditable" /><br />
             </label>
             <div><label><input type="checkbox" data-bind="checked: nameEditable" />Name editable</label></div>
             <div><label><input type="checkbox" data-bind="checked: nameVisible" />Name visible</label></div>
+            
+            <label data-bind="text: 'meow', labelFor: cellphone">
+                Cell Phone:
+                <input type="text" data-bind="value: cellphone, valueUpdate: 'afterkeydown', enable: nameEditable" /><br />
+            </label>
             
             <p data-bind="visible: nameVisible">
                 Hello, <span data-bind="text: name"></span>
@@ -74,65 +70,33 @@
                 <button data-bind="click: changeName">Change name bind</button>
             </div>
         </div>
-        <div>
-            <button>Clicker</button>
-        </div>
-
-        <div>
-            <p>
-                <label>
-                    <input type="checkbox" data-bind="checked: cellphoneEditable" />
-                    Cellphone is editable
-                </label>
-            </p>
-            <p>
-                <label>
-                    Your cellphone number:
-                    <input type="text" data-bind="value: cellphoneNumber, enable: cellphoneEditable" />
-                </label>
-            </p>
-        </div>
 
         <hr />
         <footer>
-            <p>&copy; 2014 - My ASP.NET Application</p>
+            <p>&copy; 2014 - My Boilerplate</p>
         </footer>
     </div>
-    
+
     <script src="../js/vendor/jquery-2.0.3.min.js"></script>
     <script src="../js/plugins.js"></script>
     <script src="../js/vendor/bootstrap.min.js"></script>
     <script src="../js/vendor/knockout-3.1.0.min.js"></script>
+    <script src="../js/knockout.labelFor.js"></script>
+
     <script>
-        jQuery(function ($) {
+        jQuery(function($) {
             var pageViewModel = {
-                staticName: 'Andre',
-                changeStaticName: function () {
-                    this.staticName = 'Sep';
-                },
-
-
-                name: ko.observable('Defaulty'),
+                name: ko.observable('Defaulty').extend({required: true}),
                 nameEditable: ko.observable(true),
                 nameVisible: ko.observable(true),
-                changeName: function () {
+                changeName: function() {
                     this.name('Mentor');
                 },
-
-                cellphoneEditable: ko.observable(false),
-                cellphoneNumber: '+38098812312'
+                cellphone: ko.observable()
             };
 
             ko.applyBindings(pageViewModel);
         });
     </script>
-
-    <!-- Google Analytics: change UA-XXXXX-X to be your site's ID. -->
-    <!--<script>
-            var _gaq=[['_setAccount','UA-XXXXX-X'],['_trackPageview']];
-            (function(d,t){var g=d.createElement(t),s=d.getElementsByTagName(t)[0];
-            g.src='//www.google-analytics.com/ga.js';
-            s.parentNode.insertBefore(g,s)}(document,'script'));
-        </script>-->
 </body>
 </html>
