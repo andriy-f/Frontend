@@ -1,0 +1,18 @@
+.profile-box {
+    background-color: white;
+    border: 1px solid lightgrey;
+    border-radius: 4px;
+    padding: 6px;
+    position: absolute;
+    right: 100px;
+    top: 100px;
+}
+
+.form-field {
+    margin: 4px;
+}
+
+   .form-field .caption {
+       display: inline-block;
+       width: 100px;
+   }

@@ -4,136 +4,156 @@
 <!--[if IE 8]>         <html class="no-js lt-ie9"> <![endif]-->
 <!--[if gt IE 8]><!-->
 <html class="no-js">
-<!--<![endif]-->
-<head>
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-    <title>Knockout</title>
-    <meta name="description" content="">
-    <meta name="viewport" content="width=device-width">
+    <!--<![endif]-->
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+        <title>Knockout</title>
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width">
 
-    <!-- Place favicon.ico and apple-touch-icon.png in the root directory -->
+        <!-- Place favicon.ico and apple-touch-icon.png in the root directory -->
 
-    <link rel="stylesheet" href="../css/normalize.css">
-    <link rel="stylesheet" href="../css/bootstrap.min.css">
-    <link rel="stylesheet" href="../css/bootstrap-theme.min.css">
-    <link rel="stylesheet" href="../css/theme.css">
-    <script src="../js/vendor/modernizr-2.6.2.min.js"></script>
-</head>
-<body>
-    <!--[if lt IE 7]>
+        <link rel="stylesheet" href="../css/normalize.css">
+        <link rel="stylesheet" href="../css/site.css">
+        <link rel="stylesheet" href="../css/bootstrap.min.css">
+        <link rel="stylesheet" href="../css/bootstrap-theme.min.css">
+        <link rel="stylesheet" href="../css/theme.css">
+        <script src="../js/vendor/modernizr-2.6.2.min.js"></script>
+    </head>
+    <body>
+        <!--[if lt IE 7]>
             <p class="chromeframe">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> or <a href="http://www.google.com/chromeframe/?redirect=true">activate Google Chrome Frame</a> to improve your experience.</p>
         <![endif]-->
 
-    <div class="navbar navbar-inverse navbar-fixed-top">
-        <div class="container">
-            <div class="navbar-header">
-                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                </button>
-                <a href="../" class="navbar-brand">Root</a>
-            </div>
-            <div class="navbar-collapse collapse">
-                <ul class="nav navbar-nav">
-                    <li><a href="./">Home</a></li>
-                    <li><a href="#">Demo1</a></li>
-                    <li><a href="custom-binding.html">Custom bindings</a></li>
-                    <li><a href="custom-extenders.html">Custom extenders</a></li>
-                    <li><a href="custom-validation.html">Custom Validation</a></li>
-                    <li><a href="../">Level up</a></li>
-                </ul>
+        <div class="navbar navbar-inverse navbar-fixed-top">
+            <div class="container">
+                <div class="navbar-header">
+                    <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </button>
+                    <a href="../" class="navbar-brand">Root</a>
+                </div>
+                <div class="navbar-collapse collapse">
+                    <ul class="nav navbar-nav">
+                        <li><a href="./">Home</a></li>
+                        <li><a href="#">Demo1</a></li>
+                        <li><a href="custom-binding.html">Custom bindings</a></li>
+                        <li><a href="custom-extenders.html">Custom extenders</a></li>
+                        <li><a href="custom-validation.html">Custom Validation</a></li>
+                        <li><a href="../">Level up</a></li>
+                    </ul>
+                </div>
             </div>
         </div>
-    </div>
 
-    <div class="container body-content">
-        <div>
-            <label>
-                Static name:
-                <input type="text" data-bind="value: staticName" />
-            </label>
-            <p>
-                Hello, <span data-bind="text: staticName"></span>
-            </p>
-            <button data-bind="click: changeStaticName">Don't change static name</button>
-        </div>
-
-        <div>
-            <label>
-                Name:
-                <input type="text" data-bind="value: name, valueUpdate: 'afterkeydown', enable: nameEditable" /><br />
-            </label>
-            <div><label><input type="checkbox" data-bind="checked: nameEditable" />Name editable</label></div>
-            <div><label><input type="checkbox" data-bind="checked: nameVisible" />Name visible</label></div>
-            
-            <p data-bind="visible: nameVisible">
-                Hello, <span data-bind="text: name"></span>
-            </p>
+        <div class="container body-content">
+        
+            <!--Profile-->
             <div>
-                <button data-bind="click: changeName">Change name bind</button>
+                <label>
+                    <input type="checkbox" data-bind="checked: profileVisible" /> Profile visible
+                </label>
             </div>
-        </div>
-        <div>
-            <button>Clicker</button>
-        </div>
+            
+            <div class="profile-box" data-bind="visible: profileVisible">
+                <h2>Profile</h2>
 
-        <div>
-            <p>
-                <label>
-                    <input type="checkbox" data-bind="checked: cellphoneEditable" />
-                    Cellphone is editable
-                </label>
-            </p>
-            <p>
-                <label>
-                    Your cellphone number:
-                    <input type="text" data-bind="value: cellphoneNumber, enable: cellphoneEditable" />
-                </label>
-            </p>
-        </div>
+                Hello, <span data-bind="text: displayName"></span>
+                <div>
+                    Cellphone: <span data-bind="text: cellphoneNumber"></span>
+                </div>
+                <p>
+                    Constant Field: <span data-bind="text: constField"></span>
+                </p>
+            </div>
+        
+            <hr/>
+        
+            <h3>Edit Profile</h3>
+            
+            <div>
+                <div class="form-field">
+                    <label>
+                        <span class="caption">First Name:</span><input type="text" data-bind="value: firstName, valueUpdate: 'afterkeydown', enable: firstNameEditable" />
+                    </label>
+                    <label><input type="checkbox" data-bind="checked: firstNameEditable" />Editable</label>
+                    <button data-bind="click: changeFirstNameToBob">Change to 'Bob'</button>
+                </div>
 
-        <hr />
-        <footer>
-            <p>&copy; 2014 - My ASP.NET Application</p>
-        </footer>
-    </div>
+                <div class="form-field">
+                    <label>
+                        <span class="caption">Last Name:</span><input type="text" data-bind="value: lastName" />
+                    </label>
+                    <button>Update</button>
+                </div>
+                
+                <!-- Cellphone -->
+                <div class="form-field">
+                    <label>
+                        <span class="caption">Cellphone:</span><input type="text" data-bind="value: cellphoneNumber, valueUpdate: 'afterkeydown', enable: cellphoneEditable" />
+                    </label>
+                    <label>
+                        <input type="checkbox" data-bind="checked: cellphoneEditable" /> Editable
+                    </label>
+                </div>
+                
+                <div class="form-field">
+                    <label>
+                        <span class="caption">Constant:</span><input type="text" data-bind="value: constField" />
+                    </label>
+                    <button data-bind="click: changeConstField">Try change const field</button>
+                </div>
+            </div>
+
+            <hr />
+            <footer>
+                <p>&copy; 2014 - My Knockout sample</p>
+            </footer>
+        </div>
     
-    <script src="../js/vendor/jquery-2.0.3.min.js"></script>
-    <script src="../js/plugins.js"></script>
-    <script src="../js/vendor/bootstrap.min.js"></script>
-    <script src="../js/vendor/knockout-3.1.0.min.js"></script>
-    <script>
-        jQuery(function ($) {
-            var pageViewModel = {
-                staticName: 'Andre',
-                changeStaticName: function () {
-                    this.staticName = 'Sep';
-                },
+        <script src="../js/vendor/jquery-2.0.3.min.js"></script>
+        <script src="../js/plugins.js"></script>
+        <script src="../js/vendor/bootstrap.min.js"></script>
+        <script src="../js/vendor/knockout-3.1.0.min.js"></script>
+        <script>
+            jQuery(function($) {
+                var pageViewModel = {
+                    constField: 'Const',
+                    changeConstField: function() {
+                        this.constField = 'Const changed';
+                    },
 
+                    firstName: ko.observable('John'),
+                    firstNameEditable: ko.observable(true),
+                    changeFirstNameToBob: function() {
+                        this.firstName('Bob');
+                    },
+                    
+                    lastName: ko.observable(''),
 
-                name: ko.observable('Defaulty'),
-                nameEditable: ko.observable(true),
-                nameVisible: ko.observable(true),
-                changeName: function () {
-                    this.name('Mentor');
-                },
+                    profileVisible: ko.observable(true),
 
-                cellphoneEditable: ko.observable(false),
-                cellphoneNumber: '+38098812312'
-            };
+                    cellphoneNumber: ko.observable('+38098812312'),
+                    cellphoneEditable: ko.observable(false)
+                };
 
-            ko.applyBindings(pageViewModel);
-        });
-    </script>
+                pageViewModel.displayName = ko.computed(function () {
+                    return this.firstName() + " " + this.lastName();
+                }, pageViewModel);
 
-    <!-- Google Analytics: change UA-XXXXX-X to be your site's ID. -->
-    <!--<script>
+                ko.applyBindings(pageViewModel);
+            });
+        </script>
+
+        <!-- Google Analytics: change UA-XXXXX-X to be your site's ID. -->
+        <!--<script>
             var _gaq=[['_setAccount','UA-XXXXX-X'],['_trackPageview']];
             (function(d,t){var g=d.createElement(t),s=d.getElementsByTagName(t)[0];
             g.src='//www.google-analytics.com/ga.js';
             s.parentNode.insertBefore(g,s)}(document,'script'));
         </script>-->
-</body>
+    </body>
 </html>
