@@ -17,16 +17,18 @@
        width: 100px;
    }
 
-.relatives {
-    padding: 5px;
+.edit-profile {
 }
-
-    .relatives .relative {
+    .edit-profile .relatives-edit {
+        display: inline-block;
+    }
+    
+    .edit-profile .relatives-list .relative {
         list-style-type: none;
         padding: 0 1px 1px 0;
     }
 
-    .relatives .relative-type {
+    .edit-profile .relatives-list .relative-type {
         border: 1px solid lightgray;
         border-radius: 5px 0 0 5px;
         display: inline-block;
@@ -35,14 +37,10 @@
         min-width: 60px;
     }
 
-    .relatives .relative-name {
+    .edit-profile .relatives-list .relative-name {
         border: 1px solid lightgray;
         border-radius: 0 5px 5px 0;
         padding: 1px 1px 1px 3px;
         display: inline-block;
         min-width: 100px;
     }
-
-.relatives-edit {
-    display: inline-block;
-}

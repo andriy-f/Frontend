@@ -69,10 +69,7 @@
 
                 <h4>Relatives</h4>
                 <ul class="relatives" data-bind="foreach: relatives">
-                    <li class="relative">
-                        <span class="relative-type" data-bind="text: type"></span>
-                        <span class="relative-name" data-bind="text: name"></span>
-                    </li>
+                    <li class="relative" data-bind="text: displayText()"></li>
                 </ul>
                 <p>
                     Constant Field: <span data-bind="text: constField"></span>
@@ -84,7 +81,7 @@
             <!-- Editing -->
             <h3>Edit Profile</h3>
             
-            <div>
+            <div class="edit-profile">
                 <div class="form-field">
                     <label>
                         <span class="caption">First Name:</span><input type="text" data-bind="value: firstName, valueUpdate: 'afterkeydown', enable: firstNameEditable" />
@@ -112,12 +109,12 @@
                 
                 <!--Relatives-->
                 <div class="form-field">
-                    <label>Relatives</label>
+                    <label><span class="caption">Relatives:</span></label>
                     <div class="relatives-edit">
-                        <div data-bind="foreach: relatives">
+                        <div class="relatives-list" data-bind="foreach: relatives">
                             <div>
-                                <input type="text" data-bind="value: type"/>
-                                <input type="text" data-bind="value: name"/>
+                                <input class="relative-type" type="text" data-bind="value: type"/>
+                                <input class="relative-name" type="text" data-bind="value: name"/>
                                 <button data-bind="click: $parent.removeRelative">Remove</button>
                             </div>
                         </div>
