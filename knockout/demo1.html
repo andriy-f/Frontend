@@ -113,8 +113,8 @@
                     <div class="relatives-edit">
                         <div class="relatives-list" data-bind="foreach: relatives">
                             <div>
-                                <input class="relative-type" type="text" data-bind="value: type"/>
-                                <input class="relative-name" type="text" data-bind="value: name"/>
+                                <input class="relative-type" type="text" data-bind="value: type, valueUpdate: 'afterkeydown'"/>
+                                <input class="relative-name" type="text" data-bind="value: name, valueUpdate: 'afterkeydown'"/>
                                 <button data-bind="click: $parent.removeRelative">Remove</button>
                             </div>
                         </div>
@@ -143,20 +143,20 @@
         <script>
             jQuery(function ($) {
 
-                function Relative(type, name) {
+                function RelativeModel (type, name) {
                     var self = this;
                     switch (type) {
                         case 'mother':
                         case 'father':
-                            this.type = type;
+                            this.type = ko.observable(type);
                             break;
                         default:
-                            this.type = 'other';
+                            this.type = ko.observable('other');
                     }
 
-                    this.name = name;
+                    this.name = ko.observable(name);
                     this.displayText = function() {
-                        return self.name + ', ' + self.type;
+                        return self.name() + ', ' + self.type();
                     };
                 }
 
@@ -180,12 +180,12 @@
                     cellphoneEditable: ko.observable(false),
 
                     relatives: ko.observableArray([
-                        new Relative('mother', 'Jane Smith'),
-                        new Relative('father', 'John Smith'),
-                        new Relative('sister', 'Jessica Smith')
+                        new RelativeModel('mother', 'Jane Smith'),
+                        new RelativeModel('father', 'John Smith'),
+                        new RelativeModel('sister', 'Jessica Smith')
                     ]),
                     addRelative: function() {
-                        this.relatives.push(new Relative('other', 'New'));
+                        this.relatives.push(new RelativeModel('other', 'New'));
                     }
                     
                 };
