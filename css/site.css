@@ -22,6 +22,7 @@
 }
 
     .relatives .relative {
+        list-style-type: none;
         padding: 0 1px 1px 0;
     }
 

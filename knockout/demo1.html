@@ -66,12 +66,14 @@
                 <div>
                     Cellphone: <span data-bind="text: cellphoneNumber"></span>
                 </div>
-                <fieldset class="relatives">
-                    <legend>Relatives</legend>
-                    <div data-bind="foreach: relatives">
-                        <div class="relative"><span class="relative-type" data-bind="text: type"></span><span class="relative-name" data-bind="    text: name"></span></div>
-                    </div>
-                </fieldset>
+
+                <h4>Relatives</h4>
+                <ul class="relatives" data-bind="foreach: relatives">
+                    <li class="relative">
+                        <span class="relative-type" data-bind="text: type"></span>
+                        <span class="relative-name" data-bind="text: name"></span>
+                    </li>
+                </ul>
                 <p>
                     Constant Field: <span data-bind="text: constField"></span>
                 </p>
@@ -144,7 +146,8 @@
         <script>
             jQuery(function ($) {
 
-                function Relative (type, name) {
+                function Relative(type, name) {
+                    var self = this;
                     switch (type) {
                         case 'mother':
                         case 'father':
@@ -155,6 +158,9 @@
                     }
 
                     this.name = name;
+                    this.displayText = function() {
+                        return self.name + ', ' + self.type;
+                    };
                 }
 
                 var pageViewModel = {
