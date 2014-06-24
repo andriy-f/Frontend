@@ -16,3 +16,32 @@
        display: inline-block;
        width: 100px;
    }
+
+.relatives {
+    padding: 5px;
+}
+
+    .relatives .relative {
+        padding: 0 1px 1px 0;
+    }
+
+    .relatives .relative-type {
+        border: 1px solid lightgray;
+        border-radius: 5px 0 0 5px;
+        display: inline-block;
+        padding: 1px 3px 1px 1px;
+        text-align: right;
+        min-width: 60px;
+    }
+
+    .relatives .relative-name {
+        border: 1px solid lightgray;
+        border-radius: 0 5px 5px 0;
+        padding: 1px 1px 1px 3px;
+        display: inline-block;
+        min-width: 100px;
+    }
+
+.relatives-edit {
+    display: inline-block;
+}

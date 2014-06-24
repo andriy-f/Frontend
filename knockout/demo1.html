@@ -58,13 +58,20 @@
                 </label>
             </div>
             
+            <!--Profile infobox-->
             <div class="profile-box" data-bind="visible: profileVisible">
-                <h2>Profile</h2>
+                <h1>Profile</h1>
 
                 Hello, <span data-bind="text: displayName"></span>
                 <div>
                     Cellphone: <span data-bind="text: cellphoneNumber"></span>
                 </div>
+                <fieldset class="relatives">
+                    <legend>Relatives</legend>
+                    <div data-bind="foreach: relatives">
+                        <div class="relative"><span class="relative-type" data-bind="text: type"></span><span class="relative-name" data-bind="    text: name"></span></div>
+                    </div>
+                </fieldset>
                 <p>
                     Constant Field: <span data-bind="text: constField"></span>
                 </p>
@@ -72,6 +79,7 @@
         
             <hr/>
         
+            <!-- Editing -->
             <h3>Edit Profile</h3>
             
             <div>
@@ -100,6 +108,21 @@
                     </label>
                 </div>
                 
+                <!--Relatives-->
+                <div class="form-field">
+                    <label>Relatives</label>
+                    <div class="relatives-edit">
+                        <div data-bind="foreach: relatives">
+                            <div>
+                                <input type="text" data-bind="value: type"/>
+                                <input type="text" data-bind="value: name"/>
+                                <button data-bind="click: $parent.removeRelative">Remove</button>
+                            </div>
+                        </div>
+
+                        <button data-bind="click: addRelative">Add</button>
+                    </div>
+                </div>
                 <div class="form-field">
                     <label>
                         <span class="caption">Constant:</span><input type="text" data-bind="value: constField" />
@@ -119,7 +142,21 @@
         <script src="../js/vendor/bootstrap.min.js"></script>
         <script src="../js/vendor/knockout-3.1.0.min.js"></script>
         <script>
-            jQuery(function($) {
+            jQuery(function ($) {
+
+                function Relative (type, name) {
+                    switch (type) {
+                        case 'mother':
+                        case 'father':
+                            this.type = type;
+                            break;
+                        default:
+                            this.type = 'other';
+                    }
+
+                    this.name = name;
+                }
+
                 var pageViewModel = {
                     constField: 'Const',
                     changeConstField: function() {
@@ -137,12 +174,26 @@
                     profileVisible: ko.observable(true),
 
                     cellphoneNumber: ko.observable('+38098812312'),
-                    cellphoneEditable: ko.observable(false)
+                    cellphoneEditable: ko.observable(false),
+
+                    relatives: ko.observableArray([
+                        new Relative('mother', 'Jane Smith'),
+                        new Relative('father', 'John Smith'),
+                        new Relative('sister', 'Jessica Smith')
+                    ]),
+                    addRelative: function() {
+                        this.relatives.push(new Relative('other', 'New'));
+                    }
+                    
                 };
 
                 pageViewModel.displayName = ko.computed(function () {
                     return this.firstName() + " " + this.lastName();
                 }, pageViewModel);
+
+                pageViewModel.removeRelative = function () {
+                    pageViewModel.relatives.remove(this);
+                }
 
                 ko.applyBindings(pageViewModel);
             });
