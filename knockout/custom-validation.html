@@ -16,6 +16,7 @@
     <link rel="stylesheet" href="../css/bootstrap.min.css">
     <link rel="stylesheet" href="../css/bootstrap-theme.min.css">
     <link rel="stylesheet" href="../css/theme.css">
+    <link rel="stylesheet" href="../css/site.css">
     <script src="../js/vendor/modernizr-2.6.2.min.js"></script>
 </head>
 <body>
@@ -36,10 +37,11 @@
             <div class="navbar-collapse collapse">
                 <ul class="nav navbar-nav">
                     <li><a href="./">Home</a></li>
-                    <li><a href="#">Demo1</a></li>
+                    <li><a href="demo1.html">Demo1</a></li>
                     <li><a href="custom-binding.html">Custom bindings</a></li>
                     <li><a href="custom-extenders.html">Custom extenders</a></li>
                     <li><a href="custom-validation.html">Custom Validation</a></li>
+                    <li><a href="validation-sample.html">Validation Sample</a></li>
                     <li><a href="../">Level up</a></li>
                 </ul>
             </div>
@@ -51,21 +53,32 @@
             
         <div>
             <div>
-                <label data-bind="labelFor: name">
-                    Name:
-                    <input type="text" data-bind="value: name, valueUpdate: 'afterkeydown'" /><br />
+                <label data-bind="labelFor: firstName">
+                    First Name:
+                    <input type="text" data-bind="value: firstName, valueUpdate: 'afterkeydown'" />
                 </label>
+            </div>
+            
+            <div>
+                <label data-bind="labelFor: lastName">
+                    Last Name:
+                    <input type="text" data-bind="value: lastName, valueUpdate: 'afterkeydown'" />
+                </label>
+            </div>
+            
+            <div data-bind='validationOptions: { messageTemplate: "customMessageTemplate" }'>
+                <label>Email: <input data-bind='value: emailAddress' required pattern="@"/></label>
             </div>
             
             <div>
                 <label data-bind="labelFor: cellphone">
                     Cell phone:
-                    <input type="text" data-bind="value: cellphone, valueUpdate: 'afterkeydown'" /><br />
+                    <input type="text" data-bind="value: cellphone, valueUpdate: 'afterkeydown'" />
                 </label>
             </div>
 
             <div>
-                <button data-bind="click: changeName">Submit</button>
+                <button data-bind="click: submit">Submit</button>
             </div>
         </div>
 
@@ -81,15 +94,52 @@
     <script src="../js/vendor/knockout-3.1.0.min.js"></script>
     <script src="../js/vendor/knockout.validation.min.js"></script>
     <script src="../js/knockout.labelFor.js"></script>
+    <script id="customMessageTemplate" type="text/html">
+        <em class="customMessage" data-bind='validationMessage: field'></em>
+    </script>
 
     <script>
-        jQuery(function($) {
-            var pageViewModel = {
-                name: ko.observable('Bob').extend({ required: true }),
-                cellphone: ko.observable()
+        
+        //ko.validation.configure({
+            //registerExtenders: true,
+            //messagesOnModified: true,
+            //insertMessages: true,
+            //parseInputAttributes: true,
+            //messageTemplate: 'customMessageTemplate'
+        //});
+
+        jQuery(function ($) {
+
+            ko.validation.configure({
+                registerExtenders: true,
+                messagesOnModified: true,
+                insertMessages: true,
+                parseInputAttributes: true,
+                messageTemplate: null
+            });
+
+            var PageViewModel = function() {
+                var self = this;
+
+                self.firstName = ko.observable().extend({ required: true }),
+                self.lastName = ko.observable().extend({
+                    required: { message: 'Last Name is required' }
+                }),
+                self.cellphone = ko.observable(),
+                self.emailAddress = ko.observable(),
+
+                self.errors = ko.validation.group(self);
+                self.submit = function () {
+                    if (self.errors().length == 0) {
+                        alert('Full Name: ' + self.firstName() + ' ' + self.lastName() + '\nCell: ' + self.cellphone());
+                    } else {
+                        alert('Please check your submission.');
+                        self.errors.showAllMessages();
+                    }
+                }
             };
 
-            ko.applyBindings(pageViewModel);
+            ko.applyBindings(new PageViewModel());
         });
     </script>
 </body>

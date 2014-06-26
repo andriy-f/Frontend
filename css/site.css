@@ -44,3 +44,19 @@
         display: inline-block;
         min-width: 100px;
     }
+
+/* Validation */
+
+.required-label {
+    color: red;
+}
+
+.validationMessage {
+    background-color: #f03e00;
+    color: white;
+}
+
+.customMessage {
+    background-color: blueviolet;
+    color: white;
+}

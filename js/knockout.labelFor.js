@@ -23,7 +23,7 @@
 
             var rules = ko.unwrap(valueAccessor().rules);
             if (hasRequiredRule(rules)) {
-                $(element).prepend('<span style="color: red">*</span>');
+                $(element).prepend('<span class="required-label">*</span>');
             }
         },
         update: function (element, valueAccessor, allBindings, viewModel, bindingContext) {
