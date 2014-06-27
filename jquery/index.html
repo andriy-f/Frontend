@@ -46,7 +46,14 @@
             <h1>JQuery tests</h1>
             <hr />
             
-            <div id="playground1"></div>
+            <div id="playground1">
+                <div>
+                    <span id="center"></span>
+                </div>
+                <div>
+                    <span id="fileUnuploadable"></span>
+                </div>
+            </div>
 
             <footer>
                 <p>&copy; 2014 - My Boilerplate</p>
@@ -56,10 +63,15 @@
         <script src="../js/vendor/jquery-2.0.3.min.js"></script>
         <script src="../js/plugins.js"></script>
         <script src="../js/vendor/bootstrap.min.js"></script>
+        <script src="../js/translations/en-GB.js"></script>
 
         <script>
             jQuery(function($) {
-                $('#playground1').append('<span>span</span>');
+                $('#playground1').append('<div>Appended</div>');
+
+                var t = window.frontend.translations;
+                $('#center').html(t['center']);
+                $('#fileUnuploadable').html(t['fileUnnuploadable']);
             });
         </script>
     </body>
