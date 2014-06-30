@@ -118,6 +118,8 @@
                             <div>
                                 <input class="relative-type" type="text" data-bind="value: type, valueUpdate: 'afterkeydown'"/>
                                 <input class="relative-name" type="text" data-bind="value: name, valueUpdate: 'afterkeydown'"/>
+
+                                <button data-bind="click: $parent.selectRelative">Select</button>
                                 <button class="item-remove-jquery">Remove (jQuery)</button>
                                 <button data-bind="click: $parent.removeRelative">Remove</button>
                             </div>
@@ -173,7 +175,7 @@
                     changeFirstNameToBob: function() {
                         this.firstName('Bob');
                     },
-                    
+
                     lastName: ko.observable(''),
 
                     profileVisible: ko.observable(true),
@@ -186,6 +188,7 @@
                         new RelativeModel('father', 'John Smith'),
                         new RelativeModel('sister', 'Jessica Smith')
                     ]),
+                    selectedRelative: ko.observable(null),
                     addRelative: function() {
                         this.relatives.push(new RelativeModel('', ''));
                     }
@@ -194,7 +197,10 @@
                 pageViewModel.displayName = ko.computed(function () {
                     return this.firstName() + " " + this.lastName();
                 }, pageViewModel);
-
+                pageViewModel.selectRelative = function () {
+                    pageViewModel.selectedRelative(this);
+                    console.debug(pageViewModel.selectedRelative().displayText());
+                }
                 pageViewModel.removeRelative = function () {
                     pageViewModel.relatives.remove(this);
                 }
