@@ -113,15 +113,15 @@
                 <div class="form-field">
                     <label><span class="caption">Relatives:</span></label>
                     <div class="relatives-edit">
+                        <button data-bind="click: addRelative">Add</button>
                         <div class="relatives-list" data-bind="foreach: relatives">
                             <div>
                                 <input class="relative-type" type="text" data-bind="value: type, valueUpdate: 'afterkeydown'"/>
                                 <input class="relative-name" type="text" data-bind="value: name, valueUpdate: 'afterkeydown'"/>
+                                <button class="item-remove-jquery">Remove (jQuery)</button>
                                 <button data-bind="click: $parent.removeRelative">Remove</button>
                             </div>
                         </div>
-
-                        <button data-bind="click: addRelative">Add</button>
                     </div>
                 </div>
                 <div class="form-field">
@@ -187,9 +187,8 @@
                         new RelativeModel('sister', 'Jessica Smith')
                     ]),
                     addRelative: function() {
-                        this.relatives.push(new RelativeModel('other', 'New'));
+                        this.relatives.push(new RelativeModel('', ''));
                     }
-                    
                 };
 
                 pageViewModel.displayName = ko.computed(function () {
@@ -201,6 +200,11 @@
                 }
 
                 ko.applyBindings(pageViewModel);
+
+                $('.edit-profile').on('click', '.item-remove-jquery', function () {
+                    var item = ko.dataFor(this);
+                    pageViewModel.relatives.remove(item);
+                });
             });
         </script>
 
