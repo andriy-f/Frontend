@@ -44,17 +44,13 @@
         </div>
         
         <div class="container body-content">
-            <h1>JQuery tests</h1>
-            <hr />
+            <h1>JQuery templates (deprecated)</h1>
             
-            <div id="playground1">
-                <div>
-                    <span id="center"></span>
-                </div>
-                <div>
-                    <span id="fileUnuploadable"></span>
-                </div>
-            </div>
+            <h3>1</h3>
+            <div id="template-container"></div>
+            
+            <h3>2</h3>
+            <ul id="ul1"></ul>
 
             <footer>
                 <p>&copy; 2014 - My jQuery</p>
@@ -62,17 +58,34 @@
         </div>
 
         <script src="../js/vendor/jquery-2.0.3.min.js"></script>
+        <script src="../js/vendor/jquery.tmpl.js"></script>
         <script src="../js/plugins.js"></script>
         <script src="../js/vendor/bootstrap.min.js"></script>
         <script src="../js/translations/en-GB.js"></script>
+        
+        <script id="customListItems" type="text/html">
+            <ul>
+                {{each names}}
+                <li>${name}</li>
+                {{/each}}
+            </ul>
+        </script>
+        
+        <script id="customListItem" type="text/html">            
+            <li>${name}</li>                
+        </script>
 
         <script>
-            jQuery(function($) {
-                $('#playground1').append('<div>Appended</div>');
+            var names = [
+                { name: "John Smith" },
+                { name: "Stue Simpson" },
+                { name: "Frederic Johanson" }
+            ];
 
-                var t = window.frontend.translations;
-                $('#center').html(t['center']);
-                $('#fileUnuploadable').html(t['fileUnnuploadable']);
+            jQuery(function($) {
+                $('#customListItems').tmpl(names).appendTo($('#template-container'));
+                
+                $('#customListItem').tmpl(names).appendTo($('#ul1'));
             });
         </script>
     </body>
