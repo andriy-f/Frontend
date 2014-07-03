@@ -148,86 +148,111 @@
         <script src="../js/vendor/knockout-3.1.0.min.js"></script>
         
         <div id="relative-edit-dialog" type="text/html" title="Edit relative">
-            <label data-bind="if: selectedRelative">
-                Name: <input type="text" data-bind="value: selectedRelative().name, valueUpdate: 'afterkeydown'" />
+            <label data-bind="if: editedRelative">
+                Name: <input type="text" data-bind="value: editedRelative().name" />
             </label>
         </div>
         
 
         <script>
             var $relativeEditDiallog = $('#relative-edit-dialog');
+
+            // RelativeModel class
+            function RelativeModel(type, name) {
+                var self = this;
+                switch (type) {
+                case 'mother':
+                case 'father':
+                    this.type = ko.observable(type);
+                    break;
+                default:
+                    this.type = ko.observable('other');
+                }
+
+                this.name = ko.observable(name);
+                this.displayText = function () {
+                    return self.name() + ', ' + self.type();
+                };
+            }
+
+            // Knockout model
+            var pageViewModel = {
+                constField: 'Const',
+                changeConstField: function () {
+                    this.constField = 'Const changed';
+                },
+
+                firstName: ko.observable('John'),
+                firstNameEditable: ko.observable(true),
+                changeFirstNameToBob: function () {
+                    this.firstName('Bob');
+                },
+
+                lastName: ko.observable(''),
+
+                profileVisible: ko.observable(true),
+
+                cellphoneNumber: ko.observable('+38098812312'),
+                cellphoneEditable: ko.observable(false),
+
+                relatives: ko.observableArray([
+                    new RelativeModel('mother', 'Jane Smith'),
+                    new RelativeModel('father', 'John Smith'),
+                    new RelativeModel('sister', 'Jessica Smith')
+                ]),
+                selectedRelative: ko.observable(null),
+                editedRelative: ko.observable(null),
+            };
+
+            pageViewModel.displayName = ko.computed(function () {
+                return this.firstName() + " " + this.lastName();
+            }, pageViewModel);
+
+            pageViewModel.addRelative = function () {
+                pageViewModel.relatives.push(new RelativeModel('', ''));
+            },
+
+            pageViewModel.removeRelative = function () {
+                pageViewModel.relatives.remove(this);
+            }
+
+            pageViewModel.editRelative = function () {
+                pageViewModel.selectedRelative(this);
+                pageViewModel.editedRelative(new RelativeModel(this.type(), this.name())); // clone
+                $relativeEditDiallog.dialog('open');
+            }
+
+            pageViewModel.saveRelative = function () {
+                var selRel = pageViewModel.selectedRelative();
+                var edRel = pageViewModel.editedRelative();
+                selRel.type(edRel.type());
+                selRel.name(edRel.name());
+            }
+            
+            // Relative editing dialog
             $relativeEditDiallog.dialog({
                 autoOpen: false,
+                dialogClass: "no-close",
                 buttons: [
-                     {
-                         text: "Close",
-                         click: function () {
-                             $(this).dialog("close");
-                         }
-                     }
-                ]
+                    {
+                        text: "OK",
+                        click: function () {
+                            pageViewModel.saveRelative(); // TODO: make knockoutable
+                            $(this).dialog("close");
+                        }
+                    },
+                    {
+                        text: "Cancel",
+                        click: function() {
+                            $(this).dialog("close");
+                        }
+                    }
+                ],
+                modal: true
             });
 
+            // Obsolete
             jQuery(function ($) {
-
-                function RelativeModel (type, name) {
-                    var self = this;
-                    switch (type) {
-                    case 'mother':
-                    case 'father':
-                        this.type = ko.observable(type);
-                        break;
-                    default:
-                        this.type = ko.observable('other');
-                    }
-
-                    this.name = ko.observable(name);
-                    this.displayText = function() {
-                        return self.name() + ', ' + self.type();
-                    };
-                }
-
-                var pageViewModel = {
-                    constField: 'Const',
-                    changeConstField: function() {
-                        this.constField = 'Const changed';
-                    },
-
-                    firstName: ko.observable('John'),
-                    firstNameEditable: ko.observable(true),
-                    changeFirstNameToBob: function() {
-                        this.firstName('Bob');
-                    },
-
-                    lastName: ko.observable(''),
-
-                    profileVisible: ko.observable(true),
-
-                    cellphoneNumber: ko.observable('+38098812312'),
-                    cellphoneEditable: ko.observable(false),
-
-                    relatives: ko.observableArray([
-                        new RelativeModel('mother', 'Jane Smith'),
-                        new RelativeModel('father', 'John Smith'),
-                        new RelativeModel('sister', 'Jessica Smith')
-                    ]),
-                    selectedRelative: ko.observable(null),
-                    addRelative: function() {
-                        this.relatives.push(new RelativeModel('', ''));
-                    }
-                };
-
-                pageViewModel.displayName = ko.computed(function () {
-                    return this.firstName() + " " + this.lastName();
-                }, pageViewModel);
-                pageViewModel.editRelative = function () {
-                    pageViewModel.selectedRelative(this);
-                    $relativeEditDiallog.dialog('open');
-                }
-                pageViewModel.removeRelative = function () {
-                    pageViewModel.relatives.remove(this);
-                }
-
                 ko.applyBindings(pageViewModel);
 
                 $('.edit-profile').on('click', '.item-remove-jquery', function () {
@@ -236,13 +261,5 @@
                 });
             });
         </script>
-
-        <!-- Google Analytics: change UA-XXXXX-X to be your site's ID. -->
-        <!--<script>
-            var _gaq=[['_setAccount','UA-XXXXX-X'],['_trackPageview']];
-            (function(d,t){var g=d.createElement(t),s=d.getElementsByTagName(t)[0];
-            g.src='//www.google-analytics.com/ga.js';
-            s.parentNode.insertBefore(g,s)}(document,'script'));
-        </script>-->
     </body>
 </html>
