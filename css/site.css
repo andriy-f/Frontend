@@ -60,3 +60,14 @@
     background-color: blueviolet;
     color: white;
 }
+
+.customYellowMessage {
+    background-color: goldenrod;
+    color: rgb(54, 47, 182);
+}
+
+/* custom-validation-2 */
+
+.custom-validation-2 label {
+    display: block;
+}

@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
+<!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8"> <![endif]-->
+<!--[if IE 8]>         <html class="no-js lt-ie9"> <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js"> <!--<![endif]-->
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <title>Knockout.Validation</title>
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width">
+
+    <!-- Place favicon.ico and apple-touch-icon.png in the root directory -->
+
+    <link rel="stylesheet" href="../css/normalize.css">
+    <link rel="stylesheet" href="../css/bootstrap.min.css">
+    <link rel="stylesheet" href="../css/bootstrap-theme.min.css">
+    <link rel="stylesheet" href="../css/theme.css">
+    <link rel="stylesheet" href="../css/site.css">
+    <script src="../js/vendor/modernizr-2.6.2.min.js"></script>
+</head>
+<body>
+    <!--[if lt IE 7]>
+        <p class="chromeframe">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> or <a href="http://www.google.com/chromeframe/?redirect=true">activate Google Chrome Frame</a> to improve your experience.</p>
+    <![endif]-->
+
+    <div class="navbar navbar-inverse navbar-fixed-top">
+        <div class="container">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a href="../" class="navbar-brand">Root</a>           
+            </div>
+            <div class="navbar-collapse collapse">
+                <ul class="nav navbar-nav">
+                    <li><a href="./">Home</a></li>
+                    <li><a href="demo1.html">Demo1</a></li>
+                    <li><a href="custom-binding.html">Custom bindings</a></li>
+                    <li><a href="custom-extenders.html">Custom extenders</a></li>
+                    <li><a href="custom-validation.html">Custom Validation</a></li>
+                    <li><a href="validation-sample.html">Validation Sample</a></li>
+                    <li><a href="translations.html">Translations</a></li>
+                    <li><a href="../">Level up</a></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+        
+    <div class="container body-content custom-validation-2">
+        <h1>Knockout custom validation</h1>
+            
+        <div>
+            
+            <label data-bind="labelFor: firstName">
+                First Name:
+                <input type="text" data-bind="value: firstName, valueUpdate: 'afterkeydown'" />
+            </label>
+            
+            <label data-bind="labelFor: lastName">
+                Last Name:
+                <input type="text" data-bind="value: lastName, valueUpdate: 'afterkeydown'" />
+            </label>
+            
+            
+            <div data-bind='validationOptions: { messageTemplate: "customYellowMessageTemplate" }'>
+                <label>Email: <input data-bind='value: emailAddress' required pattern="@" title="e-mail"/></label>
+            </div>
+            
+            <label data-bind="labelFor: cellphone">
+                Cell phone:
+                <input type="text" data-bind="value: cellphone, valueUpdate: 'afterkeydown'" />
+            </label>
+            <label data-bind="labelFor: salary">
+                Salary:
+                <input type="text" data-bind="value: salary, valueUpdate: 'afterkeydown'" />
+            </label>
+            
+            <div>
+                <button data-bind="click: submit">Submit</button>
+                <button data-bind="click: validate">Validate</button>
+            </div>
+        </div>
+
+        <hr />
+        <footer>
+            <p>&copy; 2014 - My Boilerplate</p>
+        </footer>
+    </div>
+
+    <script src="../js/vendor/jquery-2.0.3.min.js"></script>
+    <script src="../js/plugins.js"></script>
+    <script src="../js/vendor/bootstrap.min.js"></script>
+    <script src="../js/vendor/knockout-3.1.0.min.js"></script>
+    <script src="../js/vendor/knockout.validation.min.js"></script>
+    <script src="../js/knockout.labelFor.js"></script>
+    <!-- Localization -->
+    <script src="../js/translations/knockout.validation/ru-RU.js"></script>
+
+    <script id="customMessageTemplate" type="text/html">
+        <span class="customMessage" data-bind='validationMessage: field'></span>
+    </script>
+    
+    <script id="customYellowMessageTemplate" type="text/html">
+        <span class="customYellowMessage" data-bind='validationMessage: field'></span>
+    </script>
+
+    <script>
+        
+        //ko.validation.configure({
+            //registerExtenders: true,
+            //messagesOnModified: true,
+            //insertMessages: true,
+            //parseInputAttributes: true,
+            //messageTemplate: 'customMessageTemplate'
+        //});
+
+        jQuery(function ($) {
+
+            ko.validation.configure({
+                registerExtenders: true,
+                messagesOnModified: true,
+                insertMessages: true,
+                parseInputAttributes: true,
+                messageTemplate: null
+            });
+
+            var PageViewModel = function() {
+                var self = this;
+
+                self.firstName = ko.observable().extend({ required: true });
+                self.lastName = ko.observable().extend({
+                    required: { message: 'Last Name is so mush required!' }
+                });
+                self.cellphone = ko.observable();
+                self.emailAddress = ko.observable();
+                self.salary = ko.observable()
+                    .extend({ required: true })
+                    .extend({ number: true });
+
+                self.submit = function () {
+                    if (self.isValid()) {
+                        alert(ko.toJSON(self));
+                    } else {
+                        alert('Please check your submission.');
+                        self.errors.showAllMessages();
+                    }
+                };
+
+                self.validate = function() {
+                    if (!self.isValid()) {
+                        self.errors.showAllMessages();
+
+                        return false;
+                    }
+
+                    return true;
+                };
+            };
+
+            ko.applyBindings(ko.validatedObservable(new PageViewModel()));
+        });
+    </script>
+</body>
+</html>
