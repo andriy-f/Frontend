@@ -140,6 +140,9 @@
                 <p>&copy; 2014 - My Knockout sample</p>
                 <h3>Debug</h3>
                 <div data-bind="text: ko.toJSON($data)"></div>
+                <div data-bind="text: myFun()"></div>
+                <div data-bind="text: myFun(1)"></div>
+                <div data-bind="text: myFun.bind($data, 1)()"></div>
             </footer>
         </div>
     
@@ -204,6 +207,9 @@
                 ]),
                 selectedRelative: ko.observable(null),
                 editedRelative: ko.observable(null),
+                myFun: function (param) {
+                    return 'Funres. Param: ' + param;
+                }
             };
 
             pageViewModel.displayName = ko.computed(function () {
