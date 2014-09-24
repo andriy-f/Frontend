@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
+<!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8"> <![endif]-->
+<!--[if IE 8]>         <html class="no-js lt-ie9"> <![endif]-->
+<!--[if gt IE 8]><!--> 
+<html class="no-js">
+    <!--<![endif]-->
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+        <title>Frontend - Elessar</title>
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width">
+
+        <!-- Place favicon.ico and apple-touch-icon.png in the root directory -->
+
+        <link rel="stylesheet" href="../css/normalize.css">
+        <link rel="stylesheet" href="../css/bootstrap.min.css">
+        <link rel="stylesheet" href="../css/bootstrap-theme.min.css">
+        <link rel="stylesheet" href="../css/theme.css">
+        <link rel="stylesheet" href="../css/elessar2.css">
+        <script src="../js/vendor/modernizr-2.6.2.min.js"></script>
+        <style>
+            .elessar-handle {
+                opacity: 0.1;
+            }
+
+            header .pull-right {
+                margin: 10px 0 0 10px;
+                padding: 9.5px;
+            }
+        </style>
+    </head>
+    <body>
+        <!--[if lt IE 7]>
+            <p class="chromeframe">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> or <a href="http://www.google.com/chromeframe/?redirect=true">activate Google Chrome Frame</a> to improve your experience.</p>
+        <![endif]-->
+
+        <div class="navbar navbar-inverse navbar-fixed-top">
+            <div class="container">
+                <div class="navbar-header">
+                    <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </button>
+                    <a href="../" class="navbar-brand">Frontend</a>
+                </div>
+                <div class="navbar-collapse collapse">
+                    <ul class="nav navbar-nav">
+                        <li><a href="./">Sliders index</a></li>
+                        <li><a href="elessar.html">Elessar</a></li>
+                        <li><a href="elessar2.html">Elessar2</a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <div class="container" role="main">
+            <div data-bind="koElessar: { ranges: ranges }"></div>
+            <!--<pre class="changing"></pre>-->
+            <div class="row">
+                <div class="col-md-6"></div>
+                <div class="col-md-1">
+                    <button type="button" class="btn" data-bind="click: addRange">
+                        <span class="glyphicon glyphicon-plus"></span>
+                    </button>
+                </div>
+            </div>
+            <hr/>
+            <div class="form-inline" data-bind="foreach: ranges">
+                <div class="row">
+                    <div class="col-md-3">
+                        <label data-bind="attr: { 'for': 'start-' + $index() }">Start</label>
+                        <input type="number" data-bind="value: start, attr: { id: 'start-' + $index() }"/>
+                    </div>
+
+                    <div class="col-md-3">
+                        <label data-bind="attr: { 'for': 'end-' + $index() }">End</label>
+                        <input type="number" data-bind="value: end, attr: { id: 'end-' + $index() }"/>
+                    </div>
+                
+                    <div class="col-md-1">
+                        <button type="button" class="btn" data-bind="click: $parent.removeRange">
+                            <span class="glyphicon glyphicon-remove"></span>
+                        </button>
+                    </div>
+                </div>
+                <hr/>
+            </div>
+        </div>
+
+        <script src="../js/vendor/jquery-2.1.0.min.js"></script>
+        <script src="../js/plugins.js"></script>
+        <script src="../js/vendor/bootstrap.min.js"></script>
+        <script src="//momentjs.com/downloads/moment.min.js"></script>
+        <script src="../js/vendor/elessar.min.js"></script>
+        <script src="../js/vendor/knockout-3.2.0.js"></script>
+        <script>
+            (function ($, ko) {
+                ko.bindingHandlers.koElessar = {
+                    init: function (element, valueAccessor) {
+                        var options = valueAccessor();
+                        var rangeBar = new RangeBar({
+                            min: 0,
+                            max: 100,
+                            //valueFormat: function (ts) {
+                            //    return moment(ts).format('LLLL');
+                            //},
+                            //valueParse: function (date) {
+                            //    return moment(date).valueOf();
+                            //},
+                            values: options.ranges().map(function(range) {
+                                return [range.start(), range.end()];
+                            }),
+                            label: function (a) {
+                                return 'label';
+                            },
+                            //snap: 1000 * 60 * 15,
+                            //minSize: 1000 * 60 * 60,
+                            barClass: 'progress',
+                            rangeClass: 'bar'
+                        });
+
+                        $(element).prepend(rangeBar.$el);
+                    },
+                    update: function (element, valueAccessor) {
+                        var options = valueAccessor();
+                        var ranges = options.ranges();
+                        $(element).val(ranges.map(function(range) {
+                            return [range.start(), range.end()];
+                        }));
+                    }
+                };
+
+                function Range(start, end) {
+                    var self = this;
+
+                    self.start = ko.observable(start);
+                    self.end = ko.observable(end);
+                }
+
+                function ViewModel() {
+                    var self = this;
+                    self.ranges = ko.observableArray([]);
+                    self.addRange = function() {
+                        self.ranges.push(new Range(0, 10));
+                    };
+
+                    self.removeRange = function (range) {
+                        self.ranges.remove(range);
+                    };
+                }
+
+                $(function() {
+                    ko.applyBindings(new ViewModel());
+                });
+            })(jQuery, window.ko || {});
+        </script>
+    </body>
+</html>
