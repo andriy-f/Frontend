@@ -2,18 +2,22 @@
 <!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
 <!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8"> <![endif]-->
 <!--[if IE 8]>         <html class="no-js lt-ie9"> <![endif]-->
-<!--[if gt IE 8]><!--> <html class="no-js"> <!--<![endif]-->
+<!--[if gt IE 8]><!--> 
+<html class="no-js">
+    <!--<![endif]-->
     <head>
         <meta charset="utf-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-        <title></title>
+        <title>Frontend</title>
         <meta name="description" content="">
         <meta name="viewport" content="width=device-width">
 
         <!-- Place favicon.ico and apple-touch-icon.png in the root directory -->
 
         <link rel="stylesheet" href="css/normalize.css">
-        <link rel="stylesheet" href="css/main.css">
+        <link rel="stylesheet" href="css/bootstrap.min.css">
+        <link rel="stylesheet" href="css/bootstrap-theme.min.css">
+        <link rel="stylesheet" href="css/theme.css">
         <script src="js/vendor/modernizr-2.6.2.min.js"></script>
     </head>
     <body>
@@ -21,30 +25,67 @@
             <p class="chromeframe">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> or <a href="http://www.google.com/chromeframe/?redirect=true">activate Google Chrome Frame</a> to improve your experience.</p>
         <![endif]-->
 
-        <div class="wrapper">
-            <p class="first">Hello world! This is HTML5 Boilerplate.</p>
-            <p class="second">Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.</p>
-            <p class="third">third</p>
-            
-            
-            <input type="text" />
-            
-            <div class="inner">
-                blala
-                <p>sdfsdf</p>
+        <div class="navbar navbar-inverse navbar-fixed-top">
+            <div class="container">
+                <div class="navbar-header">
+                    <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </button>
+                    <a href="./" class="navbar-brand">Frontend</a>
+                </div>
+                <div class="navbar-collapse collapse">
+                    <ul class="nav navbar-nav">
+                        <li><a href="sample.html">Sample</a></li>                        
+                    </ul>
+                </div>
             </div>
-            <ul>
-                <li><a href="horMenu.html">horMenu</a></li>
-                <li><a href="crossDomainRequest.html">Cross Domain Request</a></li>
-                <li><a href="barcodeScannerEmu.html">Barcode scanner emulator</a></li>
-            </ul>
+        </div>
+        
+        <div class="container body-content">
+            
+            <div class="page-header">
+                <h1>Frontend</h1>
+            </div>
+            
+            <div class="row">
+                <div class="col-sm-4">
+                    <div class="panel panel-default">
+                        <div class="panel-heading">
+                            <h3 class="panel-title">Bootstrap</h3>
+                        </div>
+                        <!--<div class="panel-body"></div>-->
+                        <ul class="list-group">
+                            <li class="list-group-item"><a href="bootstrap/101template.html">101 template</a></li>
+                            <li class="list-group-item"><a href="bootstrap/theme.html">Theme</a></li>
+                        </ul>
+                    </div>
+                    <div class="panel panel-default">
+                        <div class="panel-heading">
+                            <h3 class="panel-title">Sliders</h3>
+                        </div>
+                        <ul class="list-group">
+                            <li class="list-group-item"><a href="sliders/index.html">Index</a></li>
+                            <li class="list-group-item"><a href="sliders/elessar.html">Elessar</a></li>
+                        </ul>
+                    </div>
+                </div><!-- /.col-sm-4 -->
+                <div class="col-sm-4">
+                </div><!-- /.col-sm-4 -->
+                <div class="col-sm-4">
+                </div><!-- /.col-sm-4 -->
+            </div>
+
+            <hr />
+            <footer>
+                <p>&copy; 2014 - My Application</p>
+            </footer>
         </div>
 
-        <script src="js/vendor/jquery-2.0.3.min.js"></script>
-        <!--<script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
-        <script>window.jQuery || document.write('<script src="js/vendor/jquery-1.9.1.min.js"><\/script>')</script>-->
+        <script src="js/vendor/jquery-2.1.0.min.js"></script>
         <script src="js/plugins.js"></script>
-        <script src="js/main.js"></script>
+        <script src="js/vendor/bootstrap.min.js"></script>
 
         <!-- Google Analytics: change UA-XXXXX-X to be your site's ID. -->
         <!--<script>
